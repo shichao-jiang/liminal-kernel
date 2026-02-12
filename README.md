@@ -1,6 +1,6 @@
 # Liminal Kernel: A 64-bit x86 Kernel
 
-A hobbyist operating system built from scratch, targeting the x86_64 architecture using the [Limine Boot Protocol](https://github.com/limine-bootloader/limine).
+A hobbyist operating system built from scratch in pure C, targeting the x86_64 architecture using the [Limine Boot Protocol](https://github.com/limine-bootloader/limine).
 
 ## Description
 
