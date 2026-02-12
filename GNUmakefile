@@ -22,6 +22,15 @@ run: $(IMAGE_NAME).iso
 		-boot d \
 		$(QEMUFLAGS)
 
+.PHONY: run-vnc
+run-vnc: $(IMAGE_NAME).iso
+	qemu-system-x86_64 \
+		-M q35 \
+		-cdrom $(IMAGE_NAME).iso \
+		-boot d \
+		$(QEMUFLAGS) \
+		-vnc :0
+
 .PHONY: run-uefi
 run-uefi: edk2-ovmf $(IMAGE_NAME).iso
 	qemu-system-x86_64 \
