@@ -1,7 +1,7 @@
 .SUFFIXES:
 
 # Default QEMU flags.
-QEMUFLAGS := -m 2G
+QEMUFLAGS := -m 2G -s -S
 
 override IMAGE_NAME := liminal-kernel
 
