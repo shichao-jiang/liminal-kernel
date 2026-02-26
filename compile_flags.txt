@@ -1,1 +1,3 @@
 -I./limine-protocol/include
+-I./libc/include
+-I./kernel/include

@@ -75,8 +75,11 @@ override CFLAGS += \
 
 # Internal C preprocessor flags that should not be changed by the user.
 override CPPFLAGS := \
-    -I src \
-    -I ../limine-protocol/include \
+    -Isrc \
+    -I../limine-protocol/include \
+    -I./include \
+	-I../libc/include \
+    -D__is_libk \
     $(CPPFLAGS) \
     -MMD \
     -MP
@@ -98,12 +101,14 @@ override LDFLAGS += \
 
 # Use "find" to glob all *.c, *.S, and *.asm files in the tree and obtain the
 # object and header dependency file names.
-override SRCFILES := $(shell find -L src -type f 2>/dev/null | LC_ALL=C sort)
+override SRCFILES := $(shell find -L . -type f 2>/dev/null | LC_ALL=C sort)
 override CFILES := $(filter %.c,$(SRCFILES))
 override ASFILES := $(filter %.S,$(SRCFILES))
 override NASMFILES := $(filter %.asm,$(SRCFILES))
 override OBJ := $(addprefix obj/,$(CFILES:.c=.c.o) $(ASFILES:.S=.S.o) $(NASMFILES:.asm=.asm.o))
 override HEADER_DEPS := $(addprefix obj/,$(CFILES:.c=.c.d) $(ASFILES:.S=.S.d))
+
+override LIBK := ../libc/libk.a
 
 # Default target. This must come first, before header dependencies.
 .PHONY: all
@@ -112,10 +117,13 @@ all: bin/$(OUTPUT)
 # Include header dependencies.
 -include $(HEADER_DEPS)
 
+$(LIBK):
+	$(MAKE) -C ../libc
+
 # Link rules for the final executable.
-bin/$(OUTPUT): GNUmakefile linker.lds $(OBJ)
+bin/$(OUTPUT): GNUmakefile linker.lds $(OBJ) $(LIBK)
 	mkdir -p "$(dir $@)"
-	$(LD) $(LDFLAGS) $(OBJ) -o $@
+	$(LD) $(LDFLAGS) $(OBJ) $(LIBK) -o $@
 
 # Compilation rules for *.c files.
 obj/%.c.o: %.c GNUmakefile
