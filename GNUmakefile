@@ -22,6 +22,15 @@ run: $(IMAGE_NAME).iso
 		-boot d \
 		$(QEMUFLAGS)
 
+.PHONY: run-serial
+run-serial: $(IMAGE_NAME).iso
+	qemu-system-x86_64 \
+		-M q35 \
+		-cdrom $(IMAGE_NAME).iso \
+		-boot d \
+		$(QEMUFLAGS) \
+		-nographic
+
 .PHONY: run-vnc
 run-vnc: $(IMAGE_NAME).iso
 	qemu-system-x86_64 \
@@ -75,6 +84,7 @@ $(IMAGE_NAME).iso: limine/limine kernel
 .PHONY: clean
 clean:
 	$(MAKE) -C kernel clean
+	$(MAKE) -C libc clean
 	rm -rf iso_root $(IMAGE_NAME).iso
 
 .PHONY: distclean
