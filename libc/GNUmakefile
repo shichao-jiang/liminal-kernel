@@ -1,7 +1,11 @@
 CC = $(HOME)/opt/cross/bin/x86_64-elf-gcc
 AR = $(HOME)/opt/cross/bin/x86_64-elf-ar
 
-CFLAGS = -Wall \
+CFLAGS := -g -O0
+
+override CFLAGS += \
+	-fdebug-prefix-map=$(CURDIR)=libc \
+	-Wall \
 	-Wextra \
 	-std=c11 \
 	-ffreestanding \
@@ -9,20 +13,23 @@ CFLAGS = -Wall \
     -fno-pic \
 	-mno-red-zone
 
-CPPFLAGS = \
+override CPPFLAGS := \
 	-Iinclude \
 	-I../kernel/include \
-	-D__is_libk
+	-D__is_libk \
+	$(CPPFLAGS) \
+	-MMD
 
-SRCS = $(shell find . -name '*.c')
-OBJS = $(SRCS:.c=.o)
+override SRCS := $(shell find . -name '*.c')
+override OBJS := $(addprefix obj/,$(SRCS:.c=.libk.o))
 
 libk.a: $(OBJS)
 	$(AR) rcs $@ $^
 
-%.o: %.c
+obj/%.libk.o: %.c
+	mkdir -p "$(dir $@)"
 	$(CC) $(CFLAGS) $(CPPFLAGS) -c $< -o $@
 
 .PHONY: clean
 clean:
-	rm -f $(OBJS) libk.a
+	rm -rf obj libk.a

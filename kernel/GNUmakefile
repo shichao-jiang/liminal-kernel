@@ -117,6 +117,7 @@ all: bin/$(OUTPUT)
 # Include header dependencies.
 -include $(HEADER_DEPS)
 
+.PHONY: $(LIBK)
 $(LIBK):
 	$(MAKE) -C ../libc
 
