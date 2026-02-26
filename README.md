@@ -15,11 +15,12 @@ This project is a functional, monolithic kernel designed to explore low-level sy
 - **Compiler:** `x86_64-elf-gcc` (Cross-Compiler)
 
 ## Current Features
-- [x] **Cross-Compiler Integration:** Fully isolated build environment.
+- [x] **Cross-Compiler Integration:** Built GCC cross-compiler from source for a fully isolated build environment.
 - [x] **Hybrid ISO:** Bootable via UEFI or Legacy BIOS.
-
+- [x] **Freestanding LibC:** Custom implementation of `string.h` and `stdio.h`.
+- [x] **Formatted Printing:** `kprintf` support for `%s`, `%c`, `%d`, and `%x`.
+- [x] **Serial TTY Driver:** COM1 UART driver for debugging over SSH/Serial.
 ## Roadmap
-- [ ] **Serial TTY Driver:** COM1 UART driver for debugging over SSH/Serial.
 - [ ] **Global Descriptor Table (GDT):** Establishing kernel/user segments.
 - [ ] **Interrupt Descriptor Table (IDT):** Handling CPU exceptions and hardware IRQs.
 - [ ] **Physical Memory Manager (PMM):** Bitmap-based allocation of page frames.
@@ -56,6 +57,11 @@ To run the kernel in QEMU with BIOS firmware:
 
 ```bash
 make run
+```
+To run the kernel in QEMU with serial port:
+
+```bash
+make run-serial
 ```
 
 To run the kernel in QEMU with UEFI firmware:
