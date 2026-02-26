@@ -65,6 +65,7 @@ void kmain(void) {
 
     serial_init();
     printf("Hello, world! Pos=%d, Neg=%d, Zero=%d\n", 10, -23433, 0);
+    printf("Hex: %x\n", 0xDEADBEEF);
 
     // We're done, just hang...
     hcf();

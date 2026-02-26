@@ -72,20 +72,20 @@ int printf(const char *format, ...) {
         } else if (*format == 'd') {
             format++;
             int num = va_arg(args, int);
-            char buffer[11];
+            char buffer[12];
 
-            size_t i = sizeof(buffer) - 1;
+            size_t i = sizeof(buffer);
             if (num == 0) {
-                buffer[i--] = '0';
+                buffer[--i] = '0';
             } else {
                 unsigned int unum = (num < 0) ? -(unsigned int) num : (unsigned int) num;
                 while (unum) {
                     int digit = unum % 10;
-                    buffer[i--] = '0' + digit;
+                    buffer[--i] = '0' + digit;
                     unum /= 10;
                 }
                 if (num < 0) {
-                    buffer[i--] = '-';
+                    buffer[--i] = '-';
                 }
             }
 
@@ -93,7 +93,33 @@ int printf(const char *format, ...) {
             if (len > maxrem) {
                 return -1; // TODO: Set errno to EOVERFLOW.
             }
-            if (!print(buffer + i + 1, len)) {
+            if (!print(buffer + i, len)) {
+                return -1;
+            }
+
+            written += len;
+        } else if (*format == 'x') {
+            format++;
+            unsigned int num = va_arg(args, unsigned int);
+            char map[16] = "0123456789ABCDEF";
+            char buffer[10];
+
+            size_t i = sizeof(buffer);
+            if (num == 0) {
+                buffer[--i] = '0';
+            } else {
+                while (num) {
+                    int digit = num % 16;
+                    buffer[--i] = map[digit];
+                    num /= 16;
+                }
+            }
+
+            size_t len = sizeof(buffer) - i;
+            if (len > maxrem) {
+                return -1; // TODO: Set errno to EOVERFLOW.
+            }
+            if (!print(buffer + i, len)) {
                 return -1;
             }
 
