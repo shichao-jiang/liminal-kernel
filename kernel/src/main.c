@@ -3,6 +3,7 @@
 #include <stdbool.h>
 #include <limine.h>
 #include <kernel/serial.h>
+#include <arch/x86_64/gdt.h>
 #include <stdio.h>
 
 // Set the base revision to 4, this is recommended as this is the latest
@@ -64,8 +65,10 @@ void kmain(void) {
     }
 
     serial_init();
-    printf("Hello, world! Pos=%d, Neg=%d, Zero=%d\n", 10, -23433, 0);
-    printf("Hex: %x\n", 0xDEADBEEF);
+
+    gdt_init();
+
+    printf("GDT initialized successfully!\n");
 
     // We're done, just hang...
     hcf();
