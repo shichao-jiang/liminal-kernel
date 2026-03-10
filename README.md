@@ -20,11 +20,14 @@ This project is a functional, monolithic kernel designed to explore low-level sy
 - [x] **Freestanding LibC:** Custom implementation of `string.h` and `stdio.h`.
 - [x] **Formatted Printing:** `kprintf` support for `%s`, `%c`, `%d`, and `%x`.
 - [x] **Serial TTY Driver:** COM1 UART driver for debugging over SSH/Serial.
+- [x] **Global Descriptor Table (GDT):** Establishing kernel/user segments.
 ## Roadmap
-- [ ] **Global Descriptor Table (GDT):** Establishing kernel/user segments.
 - [ ] **Interrupt Descriptor Table (IDT):** Handling CPU exceptions and hardware IRQs.
 - [ ] **Physical Memory Manager (PMM):** Bitmap-based allocation of page frames.
 - [ ] **Virtual Memory Manager (VMM):** Recursive page table mapping.
+- [ ] **Heap Allocator:** Implement kmalloc and kfree.
+- [ ] **PIT/APIC Timer:** Get the system clock ticking.
+- [ ] **PS/2 Keyboard:** Interrupt-based driver that converts scan codes into ASCII characters.
 - [ ] **User-mode:** Switching to Ring 3 and executing the first user process.
 
 ## Building and Running
