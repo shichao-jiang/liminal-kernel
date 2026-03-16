@@ -4,6 +4,7 @@
 #include <limine.h>
 #include <kernel/serial.h>
 #include <arch/x86_64/gdt.h>
+#include <arch/x86_64/idt.h>
 #include <stdio.h>
 
 // Set the base revision to 4, this is recommended as this is the latest
@@ -61,8 +62,11 @@ void kmain(void) {
     serial_init();
 
     gdt_init();
+    idt_init();
 
-    printf("GDT initialized successfully!\n");
+    printf("IDT initialized successfully!\n");
+
+    int a = 1 / 0; // divide-by-zero exception
 
     // We're done, just hang...
     hcf();
