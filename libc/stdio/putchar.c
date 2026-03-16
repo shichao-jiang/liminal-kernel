@@ -6,7 +6,7 @@
 
 int putchar(int ic) {
 #if defined(__is_libk)
-    char c = (char) ic;
+    char c = (char)ic;
     serial_write(&c, sizeof(c));
     return ic;
 #else

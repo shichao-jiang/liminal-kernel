@@ -5,7 +5,7 @@
 #include <string.h>
 
 static bool print(const char *str, size_t len) {
-    const uint8_t* bytes = (const uint8_t*) str;
+    const uint8_t *bytes = (const uint8_t *)str;
     for (size_t i = 0; i < len; i++) {
         if (putchar(bytes[i]) == EOF) {
             return false;
@@ -42,11 +42,11 @@ int printf(const char *format, ...) {
             continue;
         }
 
-        const char* format_begin = format++;
+        const char *format_begin = format++;
 
         if (*format == 'c') {
             format++;
-            char c = (char) va_arg(args, int);
+            char c = (char)va_arg(args, int);
 
             if (!maxrem) {
                 return -1; // TODO: Set errno to EOVERFLOW.
@@ -58,7 +58,7 @@ int printf(const char *format, ...) {
             written++;
         } else if (*format == 's') {
             format++;
-            const char* str = va_arg(args, const char*);
+            const char *str = va_arg(args, const char *);
             size_t len = strlen(str);
 
             if (len > maxrem) {
@@ -78,7 +78,7 @@ int printf(const char *format, ...) {
             if (num == 0) {
                 buffer[--i] = '0';
             } else {
-                unsigned int unum = (num < 0) ? -(unsigned int) num : (unsigned int) num;
+                unsigned int unum = (num < 0) ? -(unsigned int)num : (unsigned int)num;
                 while (unum) {
                     int digit = unum % 10;
                     buffer[--i] = '0' + digit;

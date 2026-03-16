@@ -11,7 +11,7 @@ int is_transmit_empty();
 
 char serial_read();
 void serial_putc(char a);
-void serial_write(const char* str, size_t len);
-void serial_writestring(const char* str);
+void serial_write(const char *str, size_t len);
+void serial_writestring(const char *str);
 
 #endif
